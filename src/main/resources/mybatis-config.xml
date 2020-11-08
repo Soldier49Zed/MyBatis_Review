@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--  该文件用来配置mybatis的数据源和与数据库相关的信息 例如: 用户名，密码 驱动 等信息  -->
+
+
+<configuration>
+
+    <!--别名-->
+    <typeAliases>
+        <typeAlias alias="role" type="com.houx.pojo.Role"/>
+    </typeAliases>
+
+    <!--数据库环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm_demo"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--映射文件-->
+    <mappers>
+        <mapper resource="com/houx/Mapper/RoleMapper.xml"/>
+    </mappers>
+
+
+    <!--<mappers>-->
+    <!--<Mapper class="com.houx.Mapper.RoleMapper"/>-->
+    <!--</mappers>-->
+</configuration>
