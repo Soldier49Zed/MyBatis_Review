@@ -13,9 +13,24 @@
         <result property="note" column="note"/>
     </resultMap>
 
+    <!--sql元素-->
+    <sql id="roleCols">
+        id,role_name,note
+    </sql>
+
+    <sql id="roleCols">
+        ${alias}.id ,${alias}.role_name,${alias}.note
+    </sql>
+
 
     <insert id="insertRole" parameterType="role">
-        insert into t_role(role_name, note) values (#{roleName},#{note})
+        <selectKey keyProperty="id" resultType="int"
+                   order="BEFORE" statementType="PREPARED">
+            select if (max(id)) = null ,1,max((id)+3) from t_role
+        </selectKey>
+        insert into t_role
+        <include refid="roleCols"/>
+        values (#{roleName},#{note})
     </insert>
 
     <delete id="deleteRole" parameterType="long">
@@ -26,13 +41,109 @@
         update t_role set role_name as roleName = #{roleName},note=#{note} from t_role where id = #{id}
     </update>
 
+
     <select id="getRole" parameterType="int" resultMap="roleMap">  <!--别名-->
-        select id, role_name as roleName, note from t_role where id = #{id}
+        select
+        <include refid="roleCols">
+            <property name="alias" value="r"/>
+        </include>
+        from t_role where id = #{id}
     </select>
 
+
+    <!--<select id="findRoles" parameterType="string" resultMap="roleMap">-->
+    <!--select id,role_name as roleName,note from t_role where role_name like concat ('%',#{roleName},'%')-->
+    <!--</select>-->
+
+    <!--使用if元素-->
     <select id="findRoles" parameterType="string" resultMap="roleMap">
-        select id,role_name as roleName,note from t_role where role_name like concat ('%',#{roleName},'%')
+        select id, role_name as roleName, note from t_role where 1 = 1
+        <if test="roleName != null and roleName != '">
+            and role_name like concat('%', #{roleName}, '%')
+        </if>
     </select>
+
+    <!--使用choose、when、otherwise-->
+    <select id="findRoles" parameterType="string" resultMap="roleMap">
+        select
+        <include refid="roleCols"/>
+        from t_role where 1 = 1
+        <choose>
+            <when test="id != null and id != ''">
+                and id = #{id}
+            </when>
+
+            <when test="roleName != null and roleName != ''">
+                and role_name like concat('%',${roleName},'%')
+            </when>
+
+            <otherwise>
+                and note is not null
+            </otherwise>
+        </choose>
+    </select>
+
+    <!--使用where元素
+        当if条件中正确时，where元素会自动去掉开头的and或者or
+    -->
+    <select id="findRoles" parameterType="role" resultMap="roleMap">
+        select
+        <include refid="roleCols"/>
+        from t_role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%',#{roleName},'%')
+            </if>
+            <if test="note != null and note != ''">
+                and note like concat('%',#{note},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <!--使用trim元素,意味着去掉一些特殊的字符串，
+        prefix:代表的是语句的前缀
+        prefixOverrides:代表的是需要去掉哪种字符串
+        suffix:
+        suffixOverrides
+    -->
+    <select id="findRoles" parameterType="role" resultMap="roleMap">
+        select
+        <include refid="roleCols"/>
+        from t_role
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="roleName != null and roleName != ''">
+                and role_name like concat('%',#{roleName},'%')
+            </if>
+        </trim>
+    </select>
+
+    <!--使用set元素,
+        set遇到" , "会把对应的","去掉
+    -->
+    <update id="findRoles" parameterType="role">
+        update t_role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName},
+            </if>
+
+            <if test="note != null and note != ''">
+                note = #{note},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="findRoles" parameterType="role">
+        update t_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="roleName != null and roleName != ''">
+                role_name = #{roleName}
+            </if>
+        </trim>
+    </update>
+
 
     <!--<select id="countUserByFirstName" parameterType="string" resultType="integer">-->
     <!--select count(*) total from t_user where user_name like concat(#{firstName},'%')-->
@@ -57,4 +168,53 @@
     </select>
 
 
+    <!--foreach元素
+        collection: 配置的roleNoList是传递进来的参数名称,他可以是一个数组、List、Set等集合
+        item: 配置的是循环中当前的元素
+        index: 配置的是当前元素在集合的位置的下标
+        open和close: 配置的是以什么符号将这些集合元素包装起来
+        separator: 是各个元素的间隔符
+    -->
+    <select id="findRolesBySex" resultMap="roleMap">
+        select * from t_role where id in
+        <foreach item="id" index="index" collection="roleNoList" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+    <!--用test属性判断字符串
+        如果把type = 'Y' 传递给sql，就可以发现MyBatis加入了条件where 1 = 1
+    -->
+    <select id="getRoleTest" parameterType="string" resultMap="roleResultMap">
+        select id,role_name,note from t_role
+        <if test=" type == 'Y'.toString()">
+            where 1=1
+        </if>
+    </select>
+
+
+    <!--bind元素-->
+    <select id="findRoles" parameterType="string" resultType="com.houx.pojo.RoleBean">
+        <bind name="pattern" value="'%' + _parameter + '%'"/>
+        select
+        id, role_name roleName, create_date createDate, end_date endDate, end_flag endFlag, note
+        from
+        t_role
+        where
+        role_name like #{pattren}
+    </select>
+
+
+    <!--使用bind元素绑定多个参数-->
+    <select id="findRoles" parameterType="string" resultType="com.houx.pojo.RoleBean">
+        <bind name="pattern_roleName" value="'%' + _parameter + '%'"/>
+        <bind name="pattern_note" value="'%' + roleName + '%'"/>
+        select
+          id, role_name roleName, create_date createDate, end_date endDate, end_flag endFlag, note
+        from
+          t_role
+        where
+          role_name like #{pattren_roleName} and note like #{pattern_note}
+    </select>
 </mapper>
