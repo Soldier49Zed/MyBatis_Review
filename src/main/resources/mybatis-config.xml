@@ -8,9 +8,12 @@
 
 <configuration>
 
+    <properties resource="jdbc.properties"/>
+
     <!--别名-->
     <typeAliases>
-        <typeAlias alias="role" type="com.houx.pojo.Role"/>
+        <!--<typeAlias alias="role" type="com.houx.pojo.Role"/>-->
+        <package name="com.houx.pojo"/>
     </typeAliases>
 
     <!--数据库环境-->
@@ -18,10 +21,10 @@
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/ssm_demo"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
@@ -30,10 +33,8 @@
     <!--映射文件-->
     <mappers>
         <mapper resource="com/houx/Mapper/RoleMapper.xml"/>
+        <mapper resource="com/houx/Mapper/RoleParamsMapper.xml"/>
+        <mapper resource="com/houx/Mapper/PageParamsMapper.xml"/>
     </mappers>
 
-
-    <!--<mappers>-->
-    <!--<Mapper class="com.houx.Mapper.RoleMapper"/>-->
-    <!--</mappers>-->
 </configuration>

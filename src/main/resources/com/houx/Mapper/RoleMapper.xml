@@ -6,6 +6,14 @@
 
 <mapper namespace="com.houx.Mapper.RoleMapper">
 
+    <!--使用resultMap作为映射结果集-->
+    <resultMap id="roleMap" type="role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="note" column="note"/>
+    </resultMap>
+
+
     <insert id="insertRole" parameterType="role">
         insert into t_role(role_name, note) values (#{roleName},#{note})
     </insert>
@@ -18,12 +26,35 @@
         update t_role set role_name as roleName = #{roleName},note=#{note} from t_role where id = #{id}
     </update>
 
-    <select id="getRole" parameterType="int" resultType="role">  <!--别名-->
+    <select id="getRole" parameterType="int" resultMap="roleMap">  <!--别名-->
         select id, role_name as roleName, note from t_role where id = #{id}
     </select>
 
-    <select id="findRoles" parameterType="string" resultType="role">
+    <select id="findRoles" parameterType="string" resultMap="roleMap">
         select id,role_name as roleName,note from t_role where role_name like concat ('%',#{roleName},'%')
     </select>
+
+    <!--<select id="countUserByFirstName" parameterType="string" resultType="integer">-->
+    <!--select count(*) total from t_user where user_name like concat(#{firstName},'%')-->
+    <!--</select>-->
+
+    <select id="findRolesByMap" parameterType="map" resultMap="roleMap">
+        select id,role_name roleName,note from t_role
+        where role_name like concat('%',#{roleName},'%')
+        and note like concat('%',#{note},'%')
+    </select>
+
+    <select id="findRolesByAnnotation" resultMap="roleMap">
+        select id,role_name roleName,note from t_role
+        where role_name like concat('%',#{roleName},'%')
+        and note like concat('%',#{note},'%')
+    </select>
+
+    <select id="findByRowBounds" resultMap="roleMap">
+        select id,role_name as roleName,note from t_role
+        where role_name like concat('%',#{roleName},'%')
+        and note like concat('%',#{note},'%')
+    </select>
+
 
 </mapper>
