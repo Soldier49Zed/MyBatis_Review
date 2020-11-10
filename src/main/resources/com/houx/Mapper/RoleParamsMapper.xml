@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<!DOCTYPE mapper-->
+        <!--PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+        <!--"http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
 
 
-<mapper namespace="com.houx.Mapper.RoleParamsMapper">
+<!--<mapper namespace="com.houx.Mapper.RoleParamsMapper">-->
 
-    <select id="findRolesByBean" parameterType="com.houx.pojo.RoleParams" resultType="role">
-        select id,role_name roleName,note from t_role
-        where role_name like concat('%',#{roleName},'%')
-        and note like concat('%',#{note},'%')
-    </select>
+    <!--<select id="findRolesByBean" parameterType="com.houx.pojo.RoleParams" resultType="role">-->
+        <!--select id,role_name roleName,note from t_role-->
+        <!--where role_name like concat('%',#{roleName},'%')-->
+        <!--and note like concat('%',#{note},'%')-->
+    <!--</select>-->
 
-</mapper>
+<!--</mapper>-->

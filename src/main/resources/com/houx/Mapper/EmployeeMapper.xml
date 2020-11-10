@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.houx.Mapper.EmployeeMapper">
+
+
+    <resultMap id="EmployeeMap" type="com.houx.pojo.Employee">
+        <id column="id" property="id"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex" typeHandler="com.houx.typeHandler.SexHandler"/>
+        <result column="birthday" property="birthday"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="position" property="position"/>
+        <result column="note" property="note"/>
+
+
+        <!--association元素  对工牌进行一对一级联-->
+        <!--collection元素  一对多级联
+            其select元素指向SQL，将通过column指定的SQL字段作为参数进行传递，
+            然后将结果返回给雇员POJO的属性employeeTaskList
+        -->
+        <!--discriminator元素 鉴别器 他的属性column代表使用哪个字段进行鉴别，
+            这里的是sex，而他的子元素case，则用于区分，类似于Java的Switch...case...语句
+            而resultMap属性表示采用哪个ResultMap去映射，比如sex = 1，则使用maleHealthFormMapper进行映射
+
+        -->
+        <association property="workCard" column="id" select="com.houx.Mapper.WorkCardMapper.getWorkCardByEmpId"/>
+        <collection property="employeeTaskList" column="id" select="com.houx.Mapper.WorkCardMapper.getWorkCardByEmpId"/>
+        <discriminator javaType="long" column="sex">
+            <case value="1" resultMap="maleHealthFormMapper"/>
+            <case value="2" resultMap="femaleHealthFormMapper"/>
+        </discriminator>
+    </resultMap>
+
+    <select id="getEmployee" parameterType="long" resultMap="EmployeeMap">
+        select id, real_name as realName, sex, birthday, mobile, email, position, note from t_employee
+        where id = #{id}
+    </select>
+
+
+</mapper>

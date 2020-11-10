@@ -1,7 +1,9 @@
 package com.houx.Controller;
 
+import com.houx.Mapper.EmployeeMapper;
 import com.houx.Mapper.RoleMapper;
 import com.houx.Mapper.RoleParamsMapper;
+import com.houx.pojo.Employee;
 import com.houx.pojo.Role;
 import com.houx.pojo.RoleParams;
 import com.houx.utils.SqlSessionFactoryUtils;
@@ -25,11 +27,10 @@ public class Main {
         SqlSession sqlSession = null;
 
         try {
-            sqlSession = SqlSessionFactoryUtils.openSqlSession();
-            RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
-            RowBounds rowBounds = new RowBounds(0, 20);
-            List<Role> roleList = roleMapper.findByRowBounds("role_name", "note", rowBounds);
-            System.err.println(roleList.size());
+            EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
+            Employee employee = employeeMapper.getEmployee(1L);
+
+            logger.info(employee.getBirthday());
 
         } catch (Exception e) {
             e.printStackTrace();

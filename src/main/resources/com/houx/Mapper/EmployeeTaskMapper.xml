@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.houx.Mapper.EmployeeTaskMapper">
+    <resultMap id="EmployeeTaskMap" type="com.houx.pojo.EmployeeTask">
+        <id column="id" property="id"/>
+        <result column="emp_id" property="empId"/>
+        <result column="task_name" property="taskName"/>
+        <result column="note" property="note"/>
+        <!--
+            雇员任务表通过任务编号task_id 和任务表示关联
+            一对一的级联关系 使用association
+            select配置是 命名空间 + SQL id的形式  这样可以指向对应的Mapper的SQL
+            Mybatis就会通过对应的SQL将数据查询回来
+            column代表SQL的列，用作参数传递给select属性指定的sql
+            如果是多个参数，则需要用逗号隔开
+        -->
+        <association property="task" column="task_id"
+                     select="com.houx.Mapper.TaskMapper.getTask"/>
+    </resultMap>
+
+    <select id="getEmployeeTaskByEmpId" resultMap="EmployeeTaskMap">
+        select id,emp_id,task_name,task_id,note from t_employee_task
+        where emp_id = #{empId}
+    </select>
+
+
+</mapper>
