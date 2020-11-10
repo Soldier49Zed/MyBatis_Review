@@ -8,5 +8,7 @@ import com.houx.pojo.Employee;
  * @Description:
  */
 public interface EmployeeMapper {
-    Employee getEmployee(long id);
+    public Employee getEmployee(Long id);
+
+    public Employee getEmployee2(Long id);
 }

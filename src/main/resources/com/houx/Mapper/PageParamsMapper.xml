@@ -8,15 +8,15 @@
 
     <!--<select id="findByMix" resultType="role">-->
         <!--select id,role_name as roleName,note from t_role-->
-        <!--where role_name like concat('%',#{params.roleName},'%')-->
-        <!--and note like concat('%',#{params.note},'%')-->
+        <!--where role_name like concat('%',#{param.roleName},'%')-->
+        <!--and note like concat('%',#{param.note},'%')-->
         <!--limit #{page.start},#{page.limit}-->
     <!--</select>-->
 
     <!--&lt;!&ndash;<select id="findByRowBounds" resultType="role">&ndash;&gt;-->
         <!--&lt;!&ndash;select id,role_name as roleName,note from t_role&ndash;&gt;-->
-        <!--&lt;!&ndash;where role_name like concat('%',#{params.roleName},'%')&ndash;&gt;-->
-        <!--&lt;!&ndash;and note like concat('%',#{params.note},'%')&ndash;&gt;-->
+        <!--&lt;!&ndash;where role_name like concat('%',#{param.roleName},'%')&ndash;&gt;-->
+        <!--&lt;!&ndash;and note like concat('%',#{param.note},'%')&ndash;&gt;-->
     <!--&lt;!&ndash;</select>&ndash;&gt;-->
 
 

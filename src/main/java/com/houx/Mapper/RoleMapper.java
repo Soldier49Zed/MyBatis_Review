@@ -1,8 +1,9 @@
 package com.houx.Mapper;
 
+import com.houx.param.PageParams;
+import com.houx.param.RoleParams;
 import com.houx.pojo.Role;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 import java.util.Map;
@@ -14,23 +15,24 @@ import java.util.Map;
  */
 public interface RoleMapper {
 
-    public int insertRole(Role role);
-
-    public int deleteRole(int id);
-
-    public int updateRole(Role role);
-
-    public Role getRole(int id);
-
-    public List<Role> findRoles(String roleName);
-
-    //public Integer countUserByFirstName(String firstName);
+    public Role getRole(Long id);
 
     public List<Role> findRolesByMap(Map<String, Object> parameterMap);
 
-    public List<Role> findRolesByAnnotation(@Param("roleName") String roleName, @Param("note") String note);
+    public List<Role> findRolesByAnnotation(@Param("roleName") String rolename, @Param("note") String note);
 
-    public List<Role> findByRowBounds(@Param("roleName") String roleName,
-                                      @Param("note") String note, RowBounds rowBounds);
+    public List<Role> findRolesByBean(RoleParams roleParam);
+
+    public List<Role> findByMix(@Param("param") RoleParams roleParams, @Param("page") PageParams PageParam);
+
+    public Role getRoleUseResultMap(Long id);
+
+    public int insertRole(Role role);
+
+    public int insertRole2(Role role);
+
+    public int updateRole(Role role);
+
+    public int deleteRole(Long id);
 
 }

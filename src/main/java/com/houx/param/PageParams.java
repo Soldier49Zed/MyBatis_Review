@@ -1,4 +1,4 @@
-package com.houx.pojo;
+package com.houx.param;
 
 /**
  * @Author: HouX

@@ -1,7 +1,7 @@
 package com.houx.Mapper;
 
 import com.houx.pojo.Role;
-import com.houx.pojo.RoleParams;
+import com.houx.param.RoleParams;
 
 import java.util.List;
 

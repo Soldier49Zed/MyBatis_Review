@@ -1,7 +1,201 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>-->
-<!--<!DOCTYPE mapper-->
-        <!--PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
-        <!--"http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.houx.Mapper.RoleMapper">
+    <!-- 测试一级缓存  -->
+    <!--
+    <cache/>
+     -->
+
+    <resultMap id="roleMap" type="com.houx.pojo.Role">
+        <id property="id" column="id" />
+        <result property="roleName" column="role_name" />
+        <result property="note" column="note" />
+    </resultMap>
+
+    <select id="getRoleUseResultMap" parameterType="long" resultMap="roleMap">
+		select id, role_name, note from t_role where id = #{id}
+	</select>
+
+    <select id="getRole" parameterType="long" resultType="com.houx.pojo.Role">
+		select id,
+		role_name as roleName, note from t_role where id = #{id}
+	</select>
+
+    <select id="findRolesByMap" parameterType="map" resultType="com.houx.pojo.Role">
+		select id, role_name as roleName, note from t_role
+		where role_name like
+		concat('%', #{roleName}, '%')
+		and note like concat('%', #{note}, '%')
+	</select>
+
+    <select id="findRolesByAnnotation" resultType="com.houx.pojo.Role">
+		select id,
+		role_name as roleName, note from t_role
+		where role_name like
+		concat('%', #{roleName}, '%')
+		and note like concat('%', #{note}, '%')
+	</select>
+
+    <select id="findRolesByBean" parameterType="com.houx.param.RoleParams"
+            resultType="com.houx.pojo.Role">
+		select id, role_name as roleName, note from t_role
+		where
+		role_name like
+		concat('%', #{roleName}, '%')
+		and note like concat('%',
+		#{note}, '%')
+	</select>
+
+    <select id="findByMix" resultType="com.houx.pojo.Role">
+		select id, role_name as
+		roleName, note from t_role
+		where role_name like
+		concat('%',
+		#{params.roleName}, '%')
+		and note like concat('%', #{params.note}, '%')
+		limit #{page.start}, #{page.limit}
+	</select>
+
+
+    <insert id="insertRole" parameterType="com.houx.pojo.Role" useGeneratedKeys="true"
+            keyProperty="id">
+		insert into t_role(role_name, note) values(#{roleName},
+		#{note})
+	</insert>
+
+    <insert id="insertRole2" parameterType="com.houx.pojo.Role">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select
+            if (max(id) = null, 1, max(id) + 3) from t_role
+        </selectKey>
+        insert into t_role2(id, role_name, note) values(#{id}, #{roleName},
+        #{note})
+    </insert>
+
+    <update id="updateRole" parameterType="com.houx.pojo.Role">
+		update t_role set role_name = #{roleName}, note = #{note}
+		where id = #{id}
+	</update>
+
+    <delete id="deleteRole" parameterType="long">
+		delete from t_role where id = #{id}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!--<mapper namespace="com.houx.Mapper.RoleMapper">-->
@@ -9,9 +203,9 @@
     <!--&lt;!&ndash;使用resultMap作为映射结果集&ndash;&gt;-->
 
     <!--<resultMap id="roleMap" type="role">-->
-        <!--<id property="id" column="id"/>-->
-        <!--<result property="roleName" column="role_name"/>-->
-        <!--<result property="note" column="note"/>-->
+        <!--<id property="id" column="id" />-->
+        <!--<result property="roleName" column="role_name" />-->
+        <!--<result property="note" column="note" />-->
     <!--</resultMap>-->
 
     <!--&lt;!&ndash;sql元素&ndash;&gt;-->

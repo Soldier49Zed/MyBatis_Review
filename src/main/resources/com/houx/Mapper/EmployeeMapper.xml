@@ -10,7 +10,7 @@
     <resultMap id="EmployeeMap" type="com.houx.pojo.Employee">
         <id column="id" property="id"/>
         <result column="real_name" property="realName"/>
-        <result column="sex" property="sex" typeHandler="com.houx.typeHandler.SexHandler"/>
+        <result column="sex" property="sex" typeHandler="com.houx.typeHandler.SexTypeHandler"/>
         <result column="birthday" property="birthday"/>
         <result column="mobile" property="mobile"/>
         <result column="email" property="email"/>

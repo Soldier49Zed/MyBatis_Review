@@ -15,12 +15,10 @@
         <setting name="aggressiveLazyLoading" value="false" />
     </settings>
 
-
     <!--别名-->
-    <typeAliases>
-        <!--<typeAlias alias="role" type="com.houx.pojo.Role"/>-->
-        <package name="com.houx.pojo"/>
-    </typeAliases>
+    <!--<typeAliases>-->
+        <!--<package name="com.houx.pojo"/>-->
+    <!--</typeAliases>-->
 
     <!--数据库环境-->
     <environments default="development">
@@ -38,10 +36,8 @@
 
     <!--映射文件-->
     <mappers>
-        <!--<mapper resource="com/houx/Mapper/RoleMapper.xml"/>-->
-        <!--<mapper resource="com/houx/Mapper/RoleParamsMapper.xml"/>-->
-        <!--<mapper resource="com/houx/Mapper/PageParamsMapper.xml"/>-->
         <package name="com.houx.Mapper"/>
+        <package name="com.houx.Mapper2"/>
     </mappers>
 
 </configuration>

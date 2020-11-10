@@ -1,5 +1,7 @@
 package com.houx.pojo;
 
+import com.houx.enumeration.SexEnum;
+
 import java.util.Date;
 import java.util.List;
 

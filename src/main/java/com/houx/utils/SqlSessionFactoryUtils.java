@@ -39,6 +39,7 @@ public class SqlSessionFactoryUtils {
         }
     }
 
+
     public static SqlSession openSqlSession() {
         if (sqlSessionFactory == null) {
             getSqlSessionFactory();
