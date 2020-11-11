@@ -6,7 +6,6 @@ package com.houx.param;
  * @Description:
  */
 public class PageParams {
-
     private int start;
     private int limit;
 

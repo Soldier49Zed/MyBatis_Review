@@ -31,8 +31,23 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-        testGetRole();
+        //testGetRole();
         //testFindRolesByMap();
+        //testFindRolesByAnnotation();
+        //testFindRolesByBean();
+        //testFindByMix();
+        //testGetRoleUseResultMap();
+        //testInsertRole();
+        //testInsertRole2();
+        //testUpdateRole();
+        //testDeleteRole();
+        //testGetEmployee();
+        //testGetEmployee2();
+        //testUserRole();
+        //testOneLevelCache();
+        testOneLevelCache2();
+
+
     }
 
     public static void testGetRole() {
@@ -268,6 +283,14 @@ public class Main {
             UserMapper2 userMapper2 = sqlSession.getMapper(UserMapper2.class);
             User2 user2 = userMapper2.getUser(1L);
             System.out.println(user2.getRoleList().size());
+            // Logger logger = Logger.getLogger(Main.class);
+            // sqlSession = SqlSessionFactoryUtils.openSqlSession();
+            // RoleMapper2 roleMapper = sqlSession.getMapper(RoleMapper2.class);
+            // Role2 role = roleMapper.getRole(1L);
+            // role.getUserList();
+            // UserMapper2 userMapper = sqlSession.getMapper(UserMapper2.class);
+            // userMapper.getUser(1L);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

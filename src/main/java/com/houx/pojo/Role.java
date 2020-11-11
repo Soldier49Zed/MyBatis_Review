@@ -1,11 +1,16 @@
 package com.houx.pojo;
 
+import java.io.Serializable;
+
 /**
  * @Author: HouX
  * @Date: 2020/11/8
  * @Description:
  */
-public class Role {
+public class Role implements Serializable {
+
+    public static final long serialVersionUID = 598736524547906734L;
+
     private long id;
     private String roleName;
     private String note;

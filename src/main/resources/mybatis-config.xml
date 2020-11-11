@@ -16,9 +16,10 @@
     </settings>
 
     <!--别名-->
-    <!--<typeAliases>-->
-        <!--<package name="com.houx.pojo"/>-->
-    <!--</typeAliases>-->
+    <typeAliases>
+        <package name="com.houx.pojo"/>
+        <package name="com.houx.pojo2"/>
+    </typeAliases>
 
     <!--数据库环境-->
     <environments default="development">

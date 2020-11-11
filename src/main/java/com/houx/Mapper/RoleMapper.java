@@ -23,7 +23,7 @@ public interface RoleMapper {
 
     public List<Role> findRolesByBean(RoleParams roleParam);
 
-    public List<Role> findByMix(@Param("param") RoleParams roleParams, @Param("page") PageParams PageParam);
+    public List<Role> findByMix(@Param("params") RoleParams roleParams, @Param("page") PageParams PageParam);
 
     public Role getRoleUseResultMap(Long id);
 
