@@ -16,6 +16,7 @@ import com.houx.pojo2.User2;
 import com.houx.utils.SqlSessionFactoryUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Map;
  * @Date: 2020/11/8
  * @Description:
  */
-
+@Controller
 public class Main {
 
     public static void main(String[] args) {
@@ -45,7 +46,9 @@ public class Main {
         //testGetEmployee2();
         //testUserRole();
         //testOneLevelCache();
-        testOneLevelCache2();
+        //testOneLevelCache2();
+        testPdCountRole();
+        //testPdFindRole();
 
 
     }
