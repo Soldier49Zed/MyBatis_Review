@@ -1,11 +1,11 @@
-package com.houx.Controller;
+package com.houx.Main;
 
 import com.houx.Mapper.EmployeeMapper;
 import com.houx.Mapper.PdRoleMapper;
 import com.houx.Mapper.RoleMapper;
 import com.houx.Mapper2.RoleMapper2;
 import com.houx.Mapper2.UserMapper2;
-import com.houx.param.PageParams;
+import com.houx.params.PageParams;
 import com.houx.param.PdCountRoleParams;
 import com.houx.param.PdFindRoleParams;
 import com.houx.param.RoleParams;
@@ -18,8 +18,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
-import java.util.HashMap;
+import com.houx.param.PageParams1;
+
 import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -132,10 +135,10 @@ public class Main {
             RoleParams roleParam = new RoleParams();
             roleParam.setNote("1");
             roleParam.setRoleName("1");
-            PageParams pageParams = new PageParams();
-            pageParams.setStart(0);
-            pageParams.setLimit(100);
-            List<Role> roles = roleMapper.findByMix(roleParam, pageParams);
+            PageParams1 PageParams1 = new PageParams1();
+            PageParams1.setStart(0);
+            PageParams1.setLimit(100);
+            List<Role> roles = roleMapper.findByMix(roleParam, PageParams1);
             System.out.println(roles.size());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -384,6 +387,48 @@ public class Main {
             logger.info(params.getTotal());
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+
+
+    private static void testMyPlugin() {
+        Logger log = Logger.getLogger(Main.class);
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = SqlSessionFactoryUtils.openSqlSession();
+            RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+            Role role = roleMapper.getRole(1L);
+            log.info(role.getRoleName());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            sqlSession.rollback();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+
+    //测试时，请在配置文件mybatis-config.xml中注释掉插件MyPlugin
+    private static void testPagePlugin() {
+        Logger log = Logger.getLogger(Main.class);
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = SqlSessionFactoryUtils.openSqlSession();
+            RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+            PageParams pageParams = new PageParams();
+            pageParams.setPageSize(10);
+            List <Role> roleList = roleMapper.findRole(pageParams, "role_name_");
+            log.info(roleList.size());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            sqlSession.rollback();
         } finally {
             if (sqlSession != null) {
                 sqlSession.close();

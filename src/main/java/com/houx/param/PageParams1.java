@@ -5,7 +5,7 @@ package com.houx.param;
  * @Date: 2020/11/9
  * @Description:
  */
-public class PageParams {
+public class PageParams1 {
     private int start;
     private int limit;
 

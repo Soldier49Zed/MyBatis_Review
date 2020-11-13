@@ -12,11 +12,14 @@
 
     <groupId>com.houx</groupId>
     <artifactId>MyBatis_Review</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <name>MyBatis_Review Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <modules>
+        <module>../MyBatis_Plugin</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

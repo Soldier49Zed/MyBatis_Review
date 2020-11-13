@@ -1,7 +1,8 @@
 package com.houx.Mapper;
 
-import com.houx.param.PageParams;
+import com.houx.param.PageParams1;
 import com.houx.param.RoleParams;
+import com.houx.params.PageParams;
 import com.houx.pojo.Role;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,7 +24,7 @@ public interface RoleMapper {
 
     public List<Role> findRolesByBean(RoleParams roleParam);
 
-    public List<Role> findByMix(@Param("params") RoleParams roleParams, @Param("page") PageParams PageParam);
+    public List<Role> findByMix(@Param("params") RoleParams roleParams, @Param("page") PageParams1 PageParam);
 
     public Role getRoleUseResultMap(Long id);
 
@@ -34,5 +35,7 @@ public interface RoleMapper {
     public int updateRole(Role role);
 
     public int deleteRole(Long id);
+
+    public List<Role> findRole(@Param("pageParams") PageParams pageParams, @Param("roleName") String roleName);
 
 }
