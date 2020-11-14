@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--  该文件用来配置mybatis的数据源和与数据库相关的信息 例如: 用户名，密码 驱动 等信息  -->
+
+
+<configuration>
+
+    <properties resource="database.properties"/>
+
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true" />
+        <setting name="aggressiveLazyLoading" value="false" />
+    </settings>
+
+    <!--别名-->
+    <typeAliases>
+        <package name="com.houx.pojo"/>
+        <package name="com.houx.pojo2"/>
+    </typeAliases>
+
+
+    <plugins>
+
+        <!-- 该插件和分页插件不兼容，测试分页插件时，需要注释掉他 -->
+        <!--<plugin interceptor="com.houx.plugin.MyPlugin">
+            <property name="dbType" value="mysql"/>
+        </plugin>-->
+
+
+        <plugin interceptor="com.houx.plugin.PagePlugin">
+            <property name="default.page" value="1" />
+            <property name="default.pageSize" value="20" />
+            <property name="default.useFlag" value="true" />
+            <property name="default.checkFlag" value="false" />
+            <property name="default.cleanOrderBy" value="false" />
+        </plugin>
+
+    </plugins>
+
+
+    <!--数据库环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${database.driver}"/>
+                <property name="url" value="${database.url}"/>
+                <property name="username" value="${database.username}"/>
+                <property name="password" value="${database.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--映射文件-->
+    <mappers>
+        <package name="com.houx.Mapper"/>
+        <package name="com.houx.Mapper2"/>
+    </mappers>
+
+</configuration>
